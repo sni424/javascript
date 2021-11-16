@@ -1,0 +1,15 @@
+.hidden{
+    display: none;
+}/*원하는곳에 이 classnames을 주면, 그요소를 숨긴다.*/
+
+img {
+    position:absolute;
+    width:100%;
+    height:100%;
+    left: 0px;
+    top: 0px;
+    right:0px;
+    bottom:0px;
+    z-index: -1;
+    opacity:80%;
+    }
