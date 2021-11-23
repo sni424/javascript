@@ -1,0 +1,27 @@
+const submitForm = document.querySelector("#login-form");
+const gernerate = document.querySelector("#between input");
+const guess = document.querySelector("#guess input");
+const h3 = document.createElement("h3");
+const h2 = document.createElement("h2");
+
+document.body.appendChild(h3);
+document.body.appendChild(h2);
+
+h3.innerText = "";
+
+function onSubmitButton(event) {
+    event.preventDefault();
+    const gernerateInput = parseInt(gernerate.value, 10);
+    const guessInput = parseInt(guess.value, 10);
+    const ranNumber = Math.ceil(Math.random() * gernerateInput);
+    if (isNaN(gernerateInput) === true || isNaN(guessInput) === true) {
+        alert("빈칸에 숫자를 입력해주세요.");
+    } else if (ranNumber > guessInput) {
+        h3.innerText = `You chose:${guessInput},the machine chose:${ranNumber}`;
+        h2.innerText = "You lost!";
+    } else if (guessInput >= ranNumber) {
+        h3.innerText = `You chose:${guessInput},the machine chose:${ranNumber}`;
+        h2.innerText = "You won!";
+    }
+}
+submitForm.addEventListener("submit", onSubmitButton);
