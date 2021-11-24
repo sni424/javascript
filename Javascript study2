@@ -1,0 +1,20 @@
+const clockTitle = document.querySelector("h2#clock")
+
+function timeStamp() {
+    const date1 = new Date('December 25, 2021 00:00:00');
+    const date = new Date();
+    const dDay = date1 - date;
+    const day = String(Math.floor(dDay / (1000 * 60 * 60 * 24))).padStart(2, "0");
+    const hour = String(Math.floor(dDay / (1000 * 60 * 60) % 24)).padStart(2, "0");
+    const minute = String(Math.floor(dDay / (1000 * 60) % 60)).padStart(2, "0");
+    const second = String(Math.floor(dDay / 1000 % 60)).padStart(2, "0");
+    clockTitle.innerText = `${day}d ${hour}h  ${minute}m ${second}s`;
+};
+
+
+setInterval(timeStamp, 1000)
+
+//1000 % 60 몫은 초
+//(1000 * 60) % 60 몫은 분
+//1000 * 60 * 60) % 24 몫은 시간
+//1000 * 60 * 60 * 24  날짜
