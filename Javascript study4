@@ -1,0 +1,230 @@
+ㄱ. let/const는 3단계로 이루어진다.
+1. 선언 단계 : 변수를 실행 컨텍스트의 변수 객체에 등록하는 단계
+2. 초기화 단계 : 변수 객체에 선언 단계의 변수를 위한 메모리를 만드는 단계
+3. 할당 단계 : 용자가 undefined로 초기화된 메모리의 다른 값을 할당하는 단계
+
+Temporal dead zone : 일시적인 사각지대
+작 지점부터 초기화 시작 지점까지의 구간
+선언전, 실행 컨텍스트 변수 객체에 등록이 되어 호이스팅이 되지만,
+이 TDZ 구간에 의해 메모리가 할당이 되질 않아 참조 에러발생
+
+hoisting 호이스팅 : 자바스크립트가 프로그램을 실행하기전에 어딘가로 이동 
+아래 예시와 같이 변수를 위로 올린다. =>프로그램이 시작되면 위로 올린다 뭐든지
+ex):
+console.log(hello)
+var hello = 2;
+=>undefined
+
+자바스크립트는 아래와같이 처리
+=>var hello;
+console.log(hello)
+hello =2;
+
+그러나 let을 쓰면 undefined이아니라 에러가 나기때문에 더욱 우리에게 좋다.
+
+=======================================================
+
+ㄴ. let/const 의 장점
+block scope가 있다.
+
+scope은 기본적으로 버블이다.
+이 버블들이 variable(변수)들이 접근가능한지 아닌지를 감지
+
+blcok은 {}이 중괄호 2개이다.
+
+ex)
+if(true){
+ let hello = "Hi"
+}
+
+
+console.log(hello)
+=>에러가남 그러나 var를 쓰면 Hi가 나옴 그이유는 var는 block scope가 없고 function scope가 있다 그말은 var가 function에 접근할 수 있다. funtion을 쓰면 문제가 없지만 만일 if,for,trt,catch등을 쓰면 문제가 생긴다.
+
+즉: let/const를 쓰면 {}괄호에 보호받기때문에 어디서 에러가 나는지 알 수 있다.
+
+=======================================================
+
+ㄷ. map 
+https://developer.mozilla.org/ko/docs/Web/JavaScript/Reference/Global_Objects/Array/map
+각각의 아이템마다 함수를 호출하는 일을 한다.
+map() 메서드는 배열 내의 모든 요소 각각에 대하여 주어진 함수를 호출한 결과를 모아 새로운 배열을 반환합니다.
+
+ex
+const names = ["hello", "world", "okay"];
+
+const plus = names.map(function (item) {
+    return item + "Jo"
+});
+
+console.log(plus);
+
+=> ['helloJo', 'worldJo', 'okayJo']
+-------------------------------------------------------------------------------------
+ㄹ. arrow funtion =>
+arrow funtion은 js에서 함수의 모습을 개선한것이며, 코드를 더 쉽게 볼 수 있게 만드는 방법이다.
+위의 함수를 아래와 같이 바꿀 수 있다.
+
+ex
+const names = ["hello", "world", "okay"];
+
+//const plus = names.map(item => {
+//    return item + "Jo"
+//});
+
+const plus = names.map(item => item + "Jo");
+
+console.log(plus);
+
+=> ['helloJo', 'worldJo', 'okayJo']
+
+위와 같이 {}블럭과 return을 없앤걸 implicit return이라고 한다. => return을 안써도 return이 적용된다는 뜻
+
+arrow funtion을 사용하지 않을 때
+1.this를 쓸때
+
+------------------------------------------------------------------------------------
+const array1 = [1, 4, 9, 16];
+
+const map1 = array1.map(x => x * 2);
+
+console.log(map1);
+
+
+=====================================================
+
+ㅁ Array.prototype.find()
+제공되는 테스트 조건을 만족하는 첫번째 엘리먼트 값을 리턴하는 함수
+그런 요소가 없다면 undefined를 반환합니다.
+https://developer.mozilla.org/ko/docs/Web/JavaScript/Reference/Global_Objects/Array/find
+
+const array1 = [5, 12, 8, 130, 44];
+
+const found = array1.find(element => element > 10);
+
+console.log(found);
+=>12
+
+여기서 12,130,40모두 해당되지만 첫번째 엘리먼트는 12이므로 12가 나온다.
+---------------------------------------------------------------------------------
+const email = [
+    "hello@naver.com",
+    "awesome@gmail.com",
+    "world@daum.com",
+    "hello2@nate.com",
+]
+
+const found = email.find(array => array.includes("@gmail.com"))
+
+console.log(found)
+=>awesome@gmail.com
+
+==============================================
+
+ㅂ Array.prototype.filter()
+https://developer.mozilla.org/ko/docs/Web/JavaScript/Reference/Global_Objects/Array/filter
+filter() 메서드는 주어진 함수의 테스트를 통과하는 모든 요소를 모아 새로운 배열로 반환합니다.
+
+const words = ['spray', 'limit', 'elite', 'exuberant', 'destruction', 'present'];
+
+const result = words.filter(word => word.length > 6);
+
+console.log(result);
+=>["exuberant", "destruction", "present"]
+-----------------------------------------------------------------------------------
+const email = [
+    "hello@naver.com",
+    "awesome@gmail.com",
+    "world@daum.com",
+    "hello2@nate.com",
+    "cool@gmail.com",
+]
+
+// const found = email.find(array => array.includes("@gmail.com"))
+
+const without = email.filter(array => !array.includes("@gmail.com"))
+
+console.log(without)
+=>['hello@naver.com', 'world@daum.com', 'hello2@nate.com']
+
+=====================================================
+
+ㅅ Array.prototype.forEach()
+forEach() 메서드는 주어진 함수를 배열 요소 각각에 대해 실행합니다.
+https://developer.mozilla.org/ko/docs/Web/JavaScript/Reference/Global_Objects/Array/forEach
+
+const array1 = ['a', 'b', 'c'];
+
+array1.forEach(element => console.log(element));
+> "a"
+> "b"
+> "c"
+
+=======================================================
+
+const email = [
+    "hello@naver.com",
+    "awesome@gmail.com",
+    "world@daum.com",
+    "hello2@nate.com",
+    "cool@gmail.com",
+]
+ㅇ 만일 여기서 @앞에있는 글자로만 새로운 배열을 만들고 싶으면 foreach대신 map을 쓰면 된다.
+
+const first = email.map(email => email.split("@")[0]);
+
+console.log(first)
+=>['hello', 'awesome', 'world', 'hello2', 'cool']
+
+=======================================================
+
+ㅈ 앞글자뿐만 아니라 object형식으로 리턴을 원할때 ({}) 소괄호 중괄호 추가
+
+const email = [
+    "hello@naver.com",
+    "awesome@gmail.com",
+    "world@daum.com",
+    "hello2@nate.com",
+    "cool@gmail.com",
+]
+
+const object1 = email.map((email, index) => ({ id: email.split("@")[0], index: index }));
+
+console.log(object1)
+
+=>0: {id: 'hello', index: 0}
+1: {id: 'awesome', index: 1}
+2: {id: 'world', index: 2}
+3: {id: 'hello2', index: 3}
+4: {id: 'cool', index: 4}
+
+
+======================================================
+
+ㅊ Default Values 
+
+function helloWorld(nice) {
+    return "hello " + nice
+}
+
+console.log(helloWorld())
+
+=>hello undefined
+
+그런데 여기서 Default Values 를 주면 nice = "world"
+
+function helloWorld(nice = "world") {
+    return "hello " + nice
+}
+
+console.log(helloWorld())
+
+=>hello world
+
+여기서 arrow function까지 쓰면
+
+function helloWorld(nice = "world") => "hello " + nice;
+
+console.log(helloWorld())
+
+=>hello world
