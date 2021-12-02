@@ -1,0 +1,302 @@
+array.of
+https://developer.mozilla.org/ko/docs/Web/JavaScript/Reference/Global_Objects/Array/of
+자의 수나 유형에 관계없이 가변 인자를 갖는 새 Array 인스턴스를 만듭니다.
+Array.of()와 Array 생성자의 차이는 정수형 인자의 처리 방법에 있습니다. Array.of(7)은 하나의 요소 7을 가진 배열을 생성하지만 Array(7)은 length 속성이 7인 빈 배열을 생성합니다.
+
+Array.of(7);       // [7]
+Array.of(1, 2, 3); // [1, 2, 3]
+
+Array(7);          // [ , , , , , , ]
+Array(1, 2, 3);    // [1, 2, 3]
+
+
+Array.from()
+https://developer.mozilla.org/ko/docs/Web/JavaScript/Reference/Global_Objects/Array/from
+유사 배열 객체(array-like object)나 반복 가능한 객체(iterable object)를 얕게 복사해 새로운Array 객체를 만듭니다.
+
+console.log(Array.from('foo'));
+> Array ["f", "o", "o"]
+console.log(Array.from([1, 2, 3], x => x + x));
+> Array [2, 4, 6]
+
+-----------------------------------------------------
+
+const buttons = document.getElementsByClassName("btn")
+
+buttons.array.forEach(element => {
+    element.addEventListener("click", () => console.log("hello"))
+});
+
+=>error
+
+const buttons = document.getElementsByClassName("btn")
+
+Array.from(buttons).forEach(element => {
+    element.addEventListener("click", () => console.log("hello"))
+});
+=>hello
+
+=======================================================
+
+Array.prototype.findIndex()
+
+https://developer.mozilla.org/ko/docs/Web/JavaScript/Reference/Global_Objects/Array/findIndex
+주어진 판별 함수를 만족하는 배열의 첫 번째 요소에 대한 인덱스를 반환합니다. 만족하는 요소가 없으면 -1을 반환합니다.
+
+const array1 = [5, 12, 8, 130, 44];
+
+const isLargeNumber = (element) => element > 13;
+
+console.log(array1.findIndex(isLargeNumber));
+=>3
+
+const friends = [
+"nico@gmail.com",
+"lynn@naver.com",
+"dal@yahoo.com",
+"mark@hotmail.com",
+"flynn@gorea.com",
+"fillarray@korea.com",
+];
+
+const check = () => friends.findIndex((friend) => friend.includes("gorea.com"));
+
+console.log(check)
+
+틀린거 고치지
+
+const unsername = friends[target].split("@")[0];
+
+const email = "korea.com";
+
+console.log(`${username}@${email}`);
+
+더 이쁘게
+
+const check = () => friends.findIndex((friend) => friend.includes("gorea.com"));
+
+let target = check();
+
+if (target !== -1) {
+console.log(target);
+
+const username = friends[target].split("@")[0];
+
+const email = "korea.com";
+
+friends[target] = `${username}@${email}`;
+
+target = check();
+}
+console.log(friends);
+
+======================================================
+
+Array.prototype.fill()
+
+https://developer.mozilla.org/ko/docs/Web/JavaScript/Reference/Global_Objects/Array/fill
+배열의 시작 인덱스부터 끝 인덱스의 이전까지 정적인 값 하나로 채웁니다.
+
+const array1 = [1, 2, 3, 4];
+console.log(array1.fill(0, 1, 3));
+index 1에서 3전까지 0으로 채우기
+=>[1, 0, 0, 4]
+
+console.log(array1.fill(5, 1));
+1부터 5로 채우기
+=>Array [1, 5, 5, 5]
+
+----------------------------------------------------------------------------------
+
+console.log(array1.fill(6));
+=>Array [6, 6, 6, 6]
+
+===================================================
+
+Object Destructuring(객체 구조화)
+
+const settings = {
+    notifications: {
+        follow: true,
+        alert: true,
+        unfollow: false,
+    },
+    color: {
+        theme: "dark",
+    }
+};
+
+const {
+    notifications: { follow },
+    color,
+} = settings;
+//여기서 notifications는 변수가 아니므로 불러오면 에러가 난다. follow나 color만 가능
+//settings은 object고 위에는 경로이다.
+
+// const notifications = settings.notifications;
+
+const { notifications
+} = settings;
+
+//default notifications이 없는경우 follow을 false로 디폴트값
+const {
+    notifications: { follow = false },
+    color,
+} = settings;
+
+console.log(notifications);
+console.log(color);
+console.log(follow);
+
+======================================================
+
+ Array Destructuring
+
+const days = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
+
+const hello = days.slice(0, 3);
+console.log(hello);
+
+const dayss = () => ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
+
+const [Mon, Tue, Wed] = dayss;
+console.log(Mon, Tue, Wed);
+
+======================================================
+
+ Renaming
+
+(1) 변수 뒤에 ': 변경할이름' 으로 변수명을 바꿔줄 수 있다
+(2) Destructuring 을 ()에 감싸서 이미 존재하는 let 변수를 업데이트 할 수 있다
+ex) const settings = {
+color: {
+chosen_color: "darK",
+},
+};
+let chosenColor = "blue";
+console.log(chosenColor); // blue
+({
+color: { chosen_color: chosenColor = "light" },// chosen_color: chosenColor 여기서 :을 쓰고 chosenColor 바꿀 변수명을 적고 default값을 light로 했다. 없으면 light가 나오게
+} = settings);
+spread
+기본적으로 변수를 가져와서 풀어 해치고 전개하는것 ...점 3개만 찍으면 됨.
+
+const friends = [1, 2, 3, 4, 5];
+console.log(friends);
+=>(5) [1, 2, 3, 4, 5] array채로 콘솔 로그가 찍혔고
+console.log(...friends);
+=>1 2 3 4 5 배열속 값들이 콘솔 로그가 찍혔다.
+
+const friends1 = ["a", "b", "c", "d", "e"];
+console.log([friends + friends1]);
+=>['1,2,3,4,5a,b,c,d,e'] 5와a가 붙음
+console.log([...friends, ...friends1]);
+=>[1, 2, 3, 4, 5, 'a', 'b', 'c', 'd', 'e'] 알맞게 배열이 합쳐서 만들어짐
+
+새로운 변수생성 후  기존 변수에 push를 사용하지않고 새 변수에 객체를 추가해서 배열 생성
+
+const friends2 = ["nico", "lynn"];
+
+const newFriends = [...friends2, "joey"];
+const newFriends = ["joey",...friends2];
+push를 사용하면 friends2에 추가되고 newFriends는 인덱스만 나타내고 객체는 undefined이다.
+console.log(newFriends);
+
+새 변수에 object 업데이트
+const objectnico = {
+    username: "nico",
+};
+
+const hello = { ...objectnico, password: 123 }
+console.log(hello)
+
+======================================================
+rest
+모든값을 하나의 변수로 축소시켜준다.
+
+const lastName = prompt("Last name : ");
+const user = {
+    username: "nico",
+    age: 24,
+    // lastName: lastName !== "" ? lastName : undefined,
+    ...(lastName !== "" && { lastName }),//2개 모두 true일때 
+};
+
+console.log(user);
+--------------------------------------------------------------------------------------
+
+Rest Parameters(매개변수)
+
+const infiniteArgs = (...wow) => console.log(wow);
+//중괄호에 ...개만적고 아무거나 이름이나 넣으면 infiniteArgs 함수에 있는 매개변수가 모두 들어감
+infiniteArgs("1", 2, true, "lalala");
+
+const bestFriendMaker = (firstone, ...rest) => {
+console.log(`mybestfriend is ${firstone}`)
+console.log(rest)
+};
+
+bestFriendMaker("nico", "lynn", "dall");
+
+spread는 변수를 확장시키고 rest는 축소시킨다
+또한 rest는 값들의 리스트를 취한다음에 하나의 변수안에 다 넣어버린다.
+
+--------------------------------------------------------------------------------------
+
+오브젝트 value 바꾸기
+const user = {
+    name: "nico",
+    age: 24,
+    password: 12345,
+};
+
+user["password"] = null;
+console.log(user);
+
+object key와 value 삭제
+
+const killage = ({ age, ...rest }) => rest;
+const cleanuser = killage(user);.
+console.log(cleanuser);
+
+object key와 value 추가
+
+const setCountry = ({ country = "KR", ...rest }) => ({ country, ...rest });
+console.log(setCountry(user));
+
+object key와 이름 바꾸기
+const rename = ({ name: newname, ...rest }) => ({ newname, ...rest });
+console.log(rename(user));
+
+=====================================================
+
+ For ... of 
+
+루프 반복문 루프를 멈출 수 있다 foreach는 불가능한 원하는곳에서 루프를 멈춤
+또한 array , iterables, nodelist,strings 같은곳에서도 사용 가능
+
+const friends = ["nico", "lynn", "ha", "hu"];
+
+for (let i = 0; i < friends.length; i++) {
+    console.log(`i love my friend ${friends[i]}`);
+}
+------------------------------------------------------------------------------------
+const addHeart = (c, i, a) => console.log(c, i, a);
+
+friends.forEach(addHeart);
+
+아래로 쉽게 바꿈
+for (const friendfor of friends) {
+    console.log(friendfor);
+}
+
+-----------------------------------------------------------------------------------
+루프 멈춤
+
+for (const friendstop of friends) {
+if (friendstop === "ha") {
+break;
+} else {
+console.log(friendstop);
+}
+}
