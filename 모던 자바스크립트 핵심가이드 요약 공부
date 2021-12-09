@@ -1,0 +1,159 @@
+모던 자바스크립트 핵심가이드 요약 공부
+
+
+0장 기초
+
+1)변수 = 값을 담기위한 공간
+
+1. 변수명은 숫자로 시작할 수 없다.
+2. 변수명에는 공백,기호, 마침표가 들어갈 수 없다.
+3. 또한 if,for같은 예약어들은 변수뿐만아니라 함수의 이름으로도 사용 불가.
+4. 두문자어,약어,의미없는 이름은 사용하지 않는것이 좋다.
+4. 캐멀,스네이크 케이스를 사용하자 각단어 첫 글자를 대문자나 _ 기호를 사용
+
+2)자료형
+
+1. 자바스크립트는 동적언어이기 때문에 변수를 정의할때 자료형을 정의할 필요는 없다.
+2. 7개의 자료형이 있으며, 6개는 원지 자료형이고 마지막 하나는 객체이다.
+
+3.원시자료형
+객체가 아닌 자료형으로 메서드를 가지지 않는다.
+①string : 문자열
+②number : 숫자
+③boolean : 불리언
+④null : 널
+⑤undefined : 정의되지 않음
+⑥symbol : 심벌 es6에서 추가됨.
+
+먼저 
+str 문자열은 텍스트 데이트러르 나타내는데 사용
+number 숫자는 숫자로 된 값
+boolean : 참 또는 거짓 값을 나타낸다 
+null은 값이 없음을 나타냄
+symbol은 고유하고 변경할 수 없는 값
+
+4.객체 object
+객체는 여러속성의 모음을 저장하는데 사용
+객체를 생성할때는 속성을 선언할 필요가 없다.
+key는 문자열이 아닌 변수 이름이므로 따옴표를 표기해서는 안된다.
+
+5.빈 객체 생성하기
+const car = new Object();
+const car = {}; => 객체 리터럴이라고 부른다.
+
+7.객체 추가
+①점표기범
+car.color = "red";
+②대괄호 표기범
+const car = {
+ "color collect" : "red",
+};
+여러단어로 된 속성을 하려면 따옴표가 있어야 하기에 대괄호 표기법을 쓴다.
+
+8.객체의 복사
+let cars = {
+ "color collect" : "red",
+};
+let handsome = cars =>①이경우는 cars를 변경하면 handsome도 변경된다.
+
+=> handsome === car =>true 두 객체는 동일하다.
+console.log(handsome)해도 {"color collect" : "red",}가 나온다.
+
+그러나 빈값을 가지고 있거나 객체가 동일해도 비교하면 false이 나온다.
+
+const hello = {};
+const wow = {};
+hello == wow => false  hello === wow =>fasle
+
+const hello = {oaky : 1};
+const wow = {okay : 1};
+hello == wow => false  hello === wow =>fasle
+
+②Object.assign()객체복사본이며, 내용을 변경하여도 다른 변수안 객체에는 영향을 주지 않는다.
+
+const car = {
+ color : "red"
+};
+
+const select  = Object.assign({},car1);
+
+
+9.항등 연산자
+== 항등 연산자
+=== 완전 항등 연산자
+
+10.배열
+순서대로 값을 저장하는 객체.
+중요! 배열은 원시 자료형이 아닌 객체이다!
+
+①길이확인 length array.length
+②끝에 새 값을 추가 push array.push(1)
+③시작부분에 새 값을 추가 unshift array.unshift(1)
+④끝에 값을 하나 제거 pop array.pop(1)
+⑤시작에 값을 하나 제거 shift array.shift(1)
+
+11.자료형 확인 typeof
+변수가 어떤 자료형 값을 담았는지 알 수 있다.
+const heal = "good";
+typeof(heal); =>string
+
+3)함수
+function heal(name){
+console.log(name + " nice to meet you")};
+
+heal("joshi");
+
+여기서 첫 행의 괄호안의 변수 name은 매개변수이며 중괄호안의 코드는 명령문이다.
+중요! 또한 함수에서 원시 자료형을 수정한다해도 변경사항에 함수 밖에서는 바뀌지 않지만.
+객체나 배열은 수정 사항이 원래의 객체에 반영된다.
+
+let good = 1
+function up(number){
+ return number += 1};
+
+good => 1
+up(good) => 2
+
+const okay = {wow : 1}
+
+function change(number){
+ return okay.car = 2};
+
+okay => {wow: 1}
+change(okay)
+okay => {wow: 1, car: 2}
+
+1.함수 표현식
+①익명함수 함수를 변수에 넣는다. 이런 함수 표형식을 익명함수
+②화살표 함수 function 키워드가 사라지고 return을 안써도 된다. 대신 =>표시가 붙는다.
+
+4)함수 스코프와 this키워드의 이해
+
+1.스코프
+변수의 스코프란 변수에 접근할 수 있는 위치를 제어한다. 
+①전역 스코프를 가지는 변수는 코드 어느곳에서나 접근할 수 있다.
+②블록 스코프를 가지는 변수는 변수가 선언된 블록 내부에서만 접근 할 수 있다.
+여기서 블록은 함수,루플 혹은 중괄호로 구분되는 모든 영역을 의미
+③let또는 const 키워드로 선언된 변수는 블록스코프를 가지게 된다.
+
+2.this
+this의 값은 함수가 호출되는 방식에 따라 다르다.
+use strict 또는 .bind()참고
+①.call()은 인수의 목록을 받고
+②.apply()는 하나아의 인수 배열을 받는다.
+
+
+1장
+
+1)var,let,const
+
+2)TDZ(일시적 비활성 구역)
+var는 정의되기전에 접근할 수 있지만 그 값에는 접근불가
+let,const는 정의하기전에 접근 불가
+console.log(x);
+var x = 1;
+=>undefined
+console.log(x);
+const x = 1;
+=>error
+var,let,const모두 호이스팅 대상이 된다. 즉 코드가 실행되기전에 처리되고 해당 스코프 상단으로 올라간다.
