@@ -1,0 +1,59 @@
+Promise.all
+
+const p1 = new Promise((resovle) => {
+    setTimeout(resovle, 4000, "First");
+});
+const p2 = new Promise((resovle) => {
+    setTimeout(resovle, 2000, "Second");
+});
+const p3 = new Promise((resovle) => {
+    setTimeout(resovle, 3000, "Third");
+});
+const motherPrimise = Promise.all([p1, p2, p3]);
+motherPrimise.then(value => console.log(value));
+Promise.all([p1, p2, p3]);중에 하나라도 reject가 되면 motherPrimise도 reject가 된다.
+motherPrimise.then(value => console.log(value))
+    .catch(err => console.log(err ));
+이런식으로 마지막에 코드를 적으면 어디서 오류가 나는지 알 수 있다.
+
+=====================================================
+Promise.race
+
+const motherPrimise = Promise.race([p1, p2, p3]);이런식으로 코드가 있을때 p1,p2,p3중에 가장 빠른것이 나온다.
+위에는 p2가 2000으로 가장 빠르기때문에 p2가 motherPrimise로 결정됨.
+p2가 resolve가 아닌 reject면 motherPrimise도 reject로 에러 메세지를 보여줌
+
+그러나 여기서 가장 중요한것을 3개가 모두 resolve거나 reject여도 가장빠른 p2만 보며줌 all은 모두를 보여주지만 race는 한개만 보여준다.
+
+=====================================================
+finally
+
+const p1 = new Promise((resolve, reject) => {
+setTimeout(reject, 1000, "First");
+})
+.then((value) => console.log(value))
+.catch((e) => console.log(`${e}error`))
+.finally(() => console.log("Im done"));
+
+then이나 catch 끝나고 나서 호출
+
+=====================================================
+fetch
+promise를 return한다.
+
+//fetch("https://google.com")
+// .then((response) => console.log(response))
+// .catch((e) => console.log(`✔${e}`));
+
+fetch("http://127.0.0.1:5500/index.html")
+.then((response) => response.text())
+// .then((potato) => console.log(potato))
+.catch((e) => console.log(`✔${e}`));
+
+fetch("https://yts.mx/api/v2/list_movies.json")
+.then((response) => {
+//console.log(response);
+return response.json();
+})
+.then((potato) => console.log(potato))
+.catch((e) => console.log(`✔${e}`));
