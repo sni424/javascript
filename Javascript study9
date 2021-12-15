@@ -1,0 +1,115 @@
+Async Await 
+
+const getMoviesAsync = async () => {
+    const response = await fetch("https://yts.mx/api/v2/list_movies.json");
+    //await는 기본적으로 promis가 끝나길 기다린다.
+    console.log(response);
+    const json = await response.json();
+    console.log(json);
+};
+
+getMoviesAsync();
+
+-----------------------------------------------------------------------------------
+
+try catch finally
+
+const getMoviesAsync = async () => {
+try {
+const response = await fetch("https://yts.mx/api/v2/list_movies.json");
+const json = await response.json();
+console.log(json);
+} catch (e) {
+console.log(e);
+} finally {
+console.log("we are done");
+}
+};
+
+getMoviesAsync();
+
+----------------------------------------------------------------------------------
+
+Parallel Async Await
+
+const getMoviesAsync = async () => {
+try {
+const [moviesResponse, upcomingResponse] = await Promise.all([
+fetch("https://yts.mx/api/v2/list_movies.json"),
+fetch("https://yts.mx/api/v2/movie_suggestions.json?movie_id=100"),
+]);
+
+const [movies, upcoming] = await Promise.all([
+moviesResponse.json(),
+upcomingResponse.json(),
+]);
+
+console.log(movies, upcoming);
+} catch (e) {
+console.log(e);
+} finally {
+console.log("we are done");
+}
+};
+
+getMoviesAsync();
+
+
+=====================================================
+class
+클래스는 기본적으로 청사진(설계도)이다.
+또한 클래스는 기본적으로 생성자(constructor)를 안에 가지고있다.
+
+class User {
+    constructor() {
+        this.name = "Hey"
+    }
+}
+const goodUser = new User();
+console.log(goodUser.name);
+
+여기서 goodUser는 class의 instance이다. instance는 살아있는 클래스를 의미
+class User이것은 죽은 class로 단지 설계도이다.
+그래서 console.log(User.name);을 하면 undefined가 나오고
+console.log(goodUser.name);을 하면 Hey가 나온다.
+
+class에서 instance는 원하는 만큼 만들 수 있으며, 함수는 class안에 넣어서 사용이 가능하다.
+
+----------------------------------------------------------------------------------
+Extending Classes
+
+class User {
+constructor(name, lastname, email, password) {
+this.username = name;
+this.lastname = lastname;
+this.email = email;
+this.password = password;
+}
+sayHello() {
+console.log(`Hello, my name is ${this.username}`);
+}
+getProfile() {
+console.log(`${this.username} ${this.email} ${this.password}`);
+}
+updatepassword(newpassword, currentpassword) {
+if (currentpassword === this.password) {
+this.password = newpassword;
+} else {
+console.log("can't change password");
+}
+}
+}
+여기서 기존 class에서 먼가 추가하면서 extend기능을 연장하고 싶다.
+class Admin extends User {
+deleteWebsite() {
+console.log("Boom!");
+}}
+const sexyAdmin = new Admin();
+sexyAdmin.deleteWebsite();
+이런식으로 기존 class의 기능을 가져오면서 새로운기능을 추가
+
+하지만 console.log(sexyAdmin.email);를 하면 undefined가 된다.
+왜냐면 constructor을 안했기때문에.
+const sexyAdmin = new Admin("Nico", "serrano", "nico@com", "1234");
+이렇게 추가하면 된다.
+------------------------------------------------------------------------------------
