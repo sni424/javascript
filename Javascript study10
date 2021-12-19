@@ -1,0 +1,359 @@
+조건부 연산자 if,switch
+
+조건식 ? 참일때 실행되는 식 : 거짓일 때 실행되는 식;
+
+5>0 ? "참입니다" : " 거짓입니다";
+=>"참입니다.
+
+변수에도 넣을 수 있음
+let value = 5>0 ? "참입니다" : " 거짓입니다";
+value => "참입니다"
+
+길게 풀면
+if(5>0){
+  "참입니다";
+}else{
+ " 거짓입니다";
+}
+
+중첩
+5>0? 6>5? "둘다참":"첫번째만 참":"첫번째는 거짓";
+'둘다참'
+5>0? 6<5? "둘다참":"첫번째만 참":"첫번째는 거짓";
+'첫번째만 참'
+5<0? 6<5? "둘다참":"첫번째만 참":"첫번째는 거짓";
+'첫번째는 거짓'
+
+5>0? 6>5?8>5? "셋다참":"두번째만 참":"거짓":"첫번째는 거짓";
+'셋다참'
+5>0? 6>5?8<5? "셋다참":"두번째까지만 참":"거짓":"첫번째는 거짓";
+'두번째까지만 참'
+5>0? 6<5?8<5? "셋다참":"두번째만 참":"거짓":"첫번째는 거짓";
+'거짓'
+5<0? 6>5?8>5? "셋다참":"두번째만 참":"거짓":"첫번째는 거짓";
+'첫번째는 거짓'
+
+
+let cond = true;
+
+let value = "";
+if (cond) {
+     value = "참"
+} else {
+     value = "거짓";
+}
+=>cond? "참" : "거짓";
+
+===================================================
+반복문 while,for
+
+let i = 0;
+while(i<=100){console.log("okay"); i++};
+
+for(시작문;조건식;종료식){
+동작문;
+}
+for (i =0;i<=99;i++){
+ console.log(i+"번쨰");
+};
+
+break반복문 멈추기
+
+let i = 0;
+while (true) {
+    if (i > 7) break;
+    console.log(i);
+    i++
+}
+
+continue넘기기
+let i = 0;
+
+while (i <= 90) {
+    i++
+    if (i % 2 === 0) { continue };
+    console.log(i);
+}
+
+if문 {}중괄호에 continue쓰는거 잊지말기!
+
+중첩 반복문
+// 퀴즈 구구단
+for (let i = 0; i < 10; i++) {
+    for (let j = 0; j < 10; j++) {
+        console.log(i + "*" + j + " = " + i * j);
+    }
+}
+
+3단
+for (let i = 0; i < 5; i++) {
+    if (i % 2 === 0) continue;
+    for (let j = 0; j < 5; j++) {
+        if (j % 2 === 0) continue;
+        for (let k = 0; k < 5; k++) {
+            if (k % 2 === 0) continue;
+            console.log(i,j,k)
+        }
+    }
+}
+
+1 1 1
+1 1 3
+1 3 1
+1 3 3
+3 1 1
+3 1 3
+3 3 1
+3 3 3
+
+퀴즈 별찍기
+
+for (i = 1; i < 6; i++) {
+    console.log("*".repeat(i));
+}
+*
+**
+***
+****
+*****
+
+별찍기 반대로
+for (i = 5; i >= 1; i--) {
+    console.log("*".repeat(i));
+}
+*****
+****
+***
+**
+*
+for (i = 0; i < 5; i++) {
+    console.log("*".repeat(5-i));
+}
+
+for (i = 0; i < 5; i++) {
+    console.log("*".repeat((i*2)+1));
+}
+*
+***
+*****
+*******
+*********
+
+for (i = 0; i < 5; i++) {
+    console.log("*".repeat(9-(i*2)));
+}
+*********
+*******
+*****
+***
+*
+
+for (i = 0; i < 5; i++) {
+    console.log(" ".repeat(i)+"*".repeat(5-i));
+}
+
+*****
+ ****
+  ***
+   **
+    *
+
+for (i = 0; i < 5; i++) {
+    console.log(" ".repeat(4-i)+"*".repeat(i+1));
+}
+
+     *
+    **
+   ***
+  ****
+ *****
+
+---------------------------------------------------------------------------------
+객체 
+배열,함수,배열이나 함수가 아닌 객체(class등)
+
+배열
+
+배열안의 배열
+const a = [[1,2,3],[5,6]];
+1을 보고싶을때
+a[0][0]
+
+배열안에든 값을 요소(element)라고 한다.
+
+배열의 마지막요소를 얻고자 할때
+a[a.length-1]
+
+배열에서 원하는 인덱스의 요소를 바꾸고싶을때
+a[2] = 3
+
+unshift,push,pop,shift 제외
+
+splice = 원하는 위치 요소제거
+a.splice(2,1);
+인데스2 부터 1개 삭제
+a.splice(2,2,"okay","good") 
+인덱스2부터 2개를 지우고 그자리에 "okay","good"추가
+
+includes 
+주어진 값이 배열에 존재하면 true 하지않으면 false
+
+몇번째 인데스에 위치하는지 찾기 indexOf
+뒤에서 부터 찾기 lastIndeOf
+없으면 -1이 나온다.
+
+배열 반복하기
+const b = [7, 2, 3, 4, 5, 6];
+
+let i = 0;
+while( i < b.length){
+console.log(b[i]);
+	i++;
+};
+
+퀴즈 배열에서 라를 제거하세요.
+const c = ["가","라","다","라","마","라",];
+
+while(c.indexOf("라") !== -1){
+	c.splice(c.indexOf("라"),1);
+	console.log(c);
+};
+
+퀴즈 indexOf중복삭제
+const c = ["가","라","다","라","마","라",];
+
+let index = c.indexOf("라");
+while(index !== -1){
+	c.splice(index ,1);
+};
+이렇게하면  반복문이 ["가"];로 무한반복됨
+
+const c = ["가","라","다","라","마","라",];
+
+let index = c.indexOf("라");
+while(index !== -1){
+	c.splice(index ,1);
+	index = c.indexOf("라");
+	console.log(c);
+};
+왜?index 가 1이되서 인덱스1이 무한으로 삭제? 
+그래서 index = c.indexOf("라");다시 할당 필요?
+
+또한 찾는게 index가 0일때
+if (c.indexOf("가")){
+	console.log("찾았다.");
+}else{
+	console.log("못찾았다.");
+}
+답은? => "못찾았다." 왜? c.indexOf("가")값이 0이라 0은 false이기 때문에 else값이 나옴
+
+그러면 어떻게? -1을 넣자.
+if (c.indexOf("가")>-1){
+	console.log("찾았다.");
+}else{
+	console.log("못찾았다.");
+}
+
+------------------------------------------------------------------------------------
+함수
+
+익명함수
+function a(){}와 달리 function(){} 과 같이 function앞에 없을때
+
+리턴은 보통 1개만 반환
+function a(){
+	return 1,5;
+}
+a() => 5 만반환
+여러개를 return하고 싶은경우 배열이나 객체 리터럴 사용
+
+parameter 파라미터
+argument 아규먼트
+
+funtion a(b){
+	console.log(b);
+}
+
+a(c);
+여기서 b는 파라미터 c는 아규먼트이다. 
+함수를 선언할때는 파라미터,혹은 매개변수
+함수를 실행할때는 아규먼트, 혹은 인수
+
+------------------------------------------------------------------------------------
+객체리터럴
+
+const good = {
+ okay : 5,
+ "21test" : "okay",
+ 5 : "awesome",
+ 6 : 8,
+ hello : "yo",
+};
+
+key를통해 볼때 2가지 방법이있다.
+good.hello
+good["hello"]
+
+2가지 방법이있는 이유
+good.5 나 good.21test하면 에러난다.
+이럴땐 good[5] 나 good["21test"]로 해야한다.
+
+제거할대는 delete
+delete good.hello
+
+
+배열과 함수가 객체인 이유
+배열과 함수는 객체의 성질을 모두 다 사용할 수 있기 때문에
+속성들을 추가하고 수정 및 제거 가능
+
+function a(){}
+a.hello = "okay"
+const array = [];
+array.c = 6
+
+-----------------------------------------------------------------------------------
+
+메서드
+
+객체의 속성값으로 함수를 넣었을때 => 객체 안에있는 함수를 뜻함
+
+const okay = {
+ method : function(a){
+	console.log(a);
+ }
+};
+
+console.log()또한 console이라는 객체안에 log 함수가 있는것이
+
+const console = {
+ log : funtion(a){
+	console.log(a);
+ }
+};
+
+-----------------------------------------------------------------------------------
+객체비교
+
+let c = 1;
+let d = 1;
+c === d
+true
+일반객체가 아닌경우에는 true
+
+let a = [1];
+let b = [1]; 
+a===b
+false
+
+객체끼리는 안에 내용이 같아도 같지않다.
+
+퀴즈 "jo"에 접근하라
+
+const hello = {
+	name : {
+		first : "joseph",
+		last : "jo",
+ },
+	age : 28,
+};
+hello.name.last
