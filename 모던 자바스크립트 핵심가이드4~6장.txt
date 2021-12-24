@@ -1,0 +1,193 @@
+es6이전 템플릿 문자열 => es6이후 템플릿 리터럴로 불림
+
+1.문자열 삽입
+백틱사용 ``
+const a = "hello world"
+console.log(`${a} 처음으로 찍는 문자`);
+=>hello world 처음으로 찍는 문자
+
+기존 +로 사용하는 대신 백틱안에 ${}사용
+ "안녕 반가워" + a; => `안녕 반가워 ${a}`;
+
+2.여려줄 문자열 생성
+기존
+const a = "hello, \
+world";
+변경
+const c = `hello
+world`;
+
+3.중첩 템플릿
+const a = [{
+    name: "jo",
+    age: 27,
+}, {
+    name: "kim",
+    age: 28,
+}];
+
+const c = a.map(a => `name is ${a.name}`);
+console.log(c);
+
+4.삼항 연사자
+const a = false;
+
+function hello() {
+    console.log(a ? "a" : "b");
+}
+=> b
+?뜻은 a가 true이면 "a"를 false이면 "b"가 반환된다.
+
+5.템플릿 리터럴에 함수 전달하기
+const a = {
+    hellp: "world",
+    age: 27,
+    arrayGood: ["hello", "awesome", 1],
+};
+
+function cold(arrayGood) {
+    console.log(arrayGood.map(x => `${x}+okay`).join("-"));
+}
+cold(a.arrayGood);
+
+6.태그된 템플릿 리터럴
+let person = "jo";
+let age = 27;
+
+function people(string, nameOne, ageOne) {
+    let str = string[1];
+    let ageStr;
+
+    ageOne> 30 ? ageStr = "old" : ageStr = "young";
+    return nameOne + str + ageStr;
+}
+let information = people` hello ${person} is a ${age}!`
+console.log(information);
+
+people(string)은  ${person}과 ${age}을 제외한  ["hello", "is a" , "!"]가 해당된다.
+그러므로 let str = string[1];은 index가 1인 is a가 반환되고.
+
+nameOne= ${person} ageOne= ${age}가 들어가고 ageOne에는 27이 들어가니
+ageOne> 30 false가 되서 ageStr = "young"가 반환
+
+nameOne + str + ageStr;=> jo is a young이 된다.
+
+=====================================================
+문자열 메서드
+
+1. indexOf() 문자열에 지정된 값이 처음 나타나는 위치 반환
+
+let result = [1, 2, 3, 4];
+console.log(result.indexOf(3));
+=>2
+
+let result = "hello nice to meet you";
+console.log(result.indexOf("nice"));
+=>6
+
+2. slice() 문자열에 지정된 부분을 새 문자열로 반환
+
+let result = "hello nice to meet you";
+console.log(result.slice(0, 10));
+=>hello nice 
+
+let result2 = [1, 2, 3, 4];
+console.log(result2.slice(1, 3));
+=>[2,3]
+
+3. toUpperCase() 문자열 내의 모든 문자를 대문자로 바꾼다.
+
+let result = "hello nice to meet you";
+console.log(result.toUpperCase());
+=>HELLO NICE TO MEET YOU
+
+4. toLowerCase() 문자열의 모든 문자를 소문자로 바꾼다.
+
+let result = "HELLO WORLD NICE TO MEET YOU TOO";
+console.log(result.toLowerCase());
+=>hello world nice to meet you too
+
+5. startsWith() 매개변수로 받은 값으로 문자열이 시작하는지 확인한다.
+
+let result = "hello nice to meet you";
+console.log(result.startsWith("n"));
+=>fasle
+
+let result = "hello nice to meet you";
+console.log(result.startsWith("he"));
+=>true
+
+let result = "hello nice to meet you";
+console.log(result.startsWith("HE"));
+=>false 대문자 소문자도 구별
+
+6. endsWith() 매개변수로 받은 값으로 문자열이 끝나는지 확인.
+
+let result = "hello nice to meet you";
+console.log(result.endsWith("ou"));
+=>true
+
+let result = "hello nice to meet you";
+console.log(result.endsWith("OU"));
+=>false 대문자 소문자 구별
+
+let result = "hello nice to meet you";
+console.log(result.endsWith("lo", 5));
+=>true 5는 첫5개 문자만 고려
+
+7. includes() 문자열에 포함되어있는지 확인.
+
+let result = "hello nice to meet you";
+console.log(result.includes("to"));
+=>true
+
+8. repeat() 문자열을 반복
+
+let result = "hello ";
+console.log(result.repeat(3));
+=>hello hello hello 
+
+====================================================
+
+디스트럭처링
+배열의 값 또는 객체의 속성을 풀어서 별개의 변수로 쓸 수 있게 해준다.
+
+const person = {
+    name: "jo",
+    age: 27,
+};
+
+const name1= person.name;
+const age1 = person.age;
+이걸 아래와 같이 바꿈
+
+const person = {
+    name: "jo",
+    age: 27,
+};
+const { name, age } = person;
+
+1. 변수 이름바꾸기
+
+const { name: first } = person;
+console.log(first) => jo
+
+2. 배열 디스트럭처링
+
+const person = ["jo", "seoul", 27];
+const [name, address, age] = person;
+console.log(age, name);
+=> 27, jo
+
+2.1 배열에서 나머지 요소들을 한번에 얻을때
+const person = ["jo", "seoul", 27, 28, 29, 30, 50, 40];
+const [name, address, ...age] = person;
+console.log(age);
+=>[27, 28, 29, 30, 50, 40]
+
+3. 변수명 서로 바꾸기
+let age = 27;
+let number = 28;
+[age, number] = [number, age];
+console.log(number);
+=>27
