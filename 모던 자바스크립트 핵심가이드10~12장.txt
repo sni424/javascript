@@ -1,0 +1,172 @@
+객체 리터럴의 업그레이드
+
+1. 변수를 키와 값으로 하는 객체 만들기
+const name = "jo";
+const surname = "jong";
+const age = 25;
+const country = "korea";
+
+const person = {
+    name: name,
+    surname: surname,
+    age: age,
+    country: country,
+}
+위를 아래와 같이 만들 수 있다.
+
+const person = {
+    name,
+    surname,
+    age,
+    country,
+};
+
+2. 객체에 함수 추가하기
+
+const value = {
+    name: "hello",
+    wow: function () { },
+};
+
+funtion대신에 key에 함수이름을 넣으면 된다.
+
+const value = {
+    name: "hello",
+    wow() { },
+};
+
+대신 화살표함수는 익명함수이니 반드시 key가 있어야 한다.
+const value = {
+    name: "hello",
+    wow : () => console.log("hello"),
+};
+
+3. 객체의 속성을 동적으로 정의하기
+
+const userName = "jo";
+const person = {
+    [userName]: "good",
+};
+console.log(userName, person.jo);
+=>jo good
+
+=====================================================
+심벌의 고유성
+
+심벌은 항상 고유하며 객체 속성의 식별자로 사용할 수 있다.
+
+const me = Symbol("wow");
+const wow = Symbol("wow");
+
+console.log(me === wow, me == wow);
+=>false fasle 
+이와같은 wow라는 같은 값을 가진것 같지만 각자 고유의 값이기에 다르다.
+
+1. 객체 속성에 대한 식별자
+
+const value = {
+    [Symbol("Tom")]: "사장",
+    [Symbol("Jin")]: "이사",
+    [Symbol("Tom")]: "부장",
+};
+
+//for in으로 하나씩 가져오려면 undefined뜸 그래서 Object.getOwnPropertySymbols()사용팔수!
+const Add = Object.getOwnPropertySymbols(value);
+console.log(Add); //배열로 나옴
+
+const solve = Add.map(symbol => value[symbol]);
+console.log(solve);
+=>['사장', '이사', '부장']
+
+
+====================================================
+클래스
+
+클래스 선언
+class Person{}
+
+클래스 표현식
+const person = class Person{};
+
+위에 2개는 호이스팅이되지 않는다. 그래서 무조건 클래스에 접근하기 전에는 클래스를 선언해야한다.
+
+클래스 만들기
+class Person {
+    constructor(name, age) {
+        this.name = name;
+        this.age = age;
+    }
+    greeting() {
+        console.log(`hello my name is ${this.name} and I'm${this.age} years old`)
+    }
+    farewell() {
+        console.log("bye bye")
+    }//메서드가 2개(greeting(),farewell()) 이상 포함되면 에러가 발생한다.
+}
+
+const alberto = new Person("jo", 28);
+alberto.greeting();
+alberto.farewell();
+
+1. 정적 메서드
+class Person {
+    constructor(name, age) {
+        this.name = name;
+        this.age = age;
+    }
+    static info() {
+        console.log("nice to meet you")
+    }
+}
+
+const alberto = new Person("jo", 28);
+Person.info();
+alberto.info();//Type error
+
+2.  set와 get
+
+class Person {
+    constructor(name, age) {
+        this.name = name;
+        this.age = age;
+        this.id = "";
+    }
+    set idName(value) {
+        this.id = value;
+        console.log(this.id);
+    }
+    get idName() {
+        console.log(`your id is ${this.id}`);
+    }
+}
+
+const alberto = new Person("jo", 28);
+alberto.idName = "wow123"//세터 호출
+alberto.idName;//게터호출
+
+3. 클래스 상속하기
+
+class Person {
+    constructor(name, age) {
+        this.name = name;
+        this.age = age;
+    }
+    greeting() {
+        console.log(`hello my name is ${this.name} and I'm${this.age} years old`)
+    }
+}
+
+class AddClass extends Person {
+    constructor(name, age, address) {
+        super(name, age)//super을 쓰지 않으면 Person을 만들라는 에러가 난다.
+        this.address = address;
+    }
+    nice() {
+        console.log(`hello my name is ${this.name} and I'm${this.age} years old and i live in ${this.address}`)
+    }
+}
+
+const hello = new AddClass("jo", 27, "seoul")
+hello.nice();
+
+4. 배열 확장하기
